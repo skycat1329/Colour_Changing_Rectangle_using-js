@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+     <title>Color gradient rectangle</title>
+    <link rel="stylesheet" href="main.css">
+    
+</head>
+<body>
+    <div id="center">
+        
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js" integrity="sha512-7Au1ULjlT8PP1Ygs6mDZh9NuQD0A5prSrAUiPHMXpU6g3UMd8qesVnhug5X4RoDr35x5upNpx0A6Sisz1LSTXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        
+        //crete a variable to tabke input from query selector
+        var rectangle = document.querySelector("#center");
+        //using event listner find the exact position of mouse pointer
+        rectangle.addEventListener("mousemove",function(mouse_info){
+            //this will shiow the exac location of the var rectangle which is center
+           var rectangle_location= rectangle.getBoundingClientRect();
+           //here we will subtract clientX (which is point on screen where the rectangle starts)
+           //and subtract that data from cursor location
+          var rectangle_value = mouse_info.clientX - rectangle_location.left;
+
+          //now we will check the conditions
+          if(rectangle_value < rectangle_location.width / 2) {
+            var redcolor = gsap.utils.mapRange(0,rectangle_location.width /2,255,0,rectangle_value);
+            gsap.to(rectangle,{
+                backgroundColor:`rgb(${redcolor},0,0)`,
+                ease:Power4,
+            })
+          }
+          else{
+           var bluecolor = gsap.utils.mapRange(rectangle_location.width/2,rectangle_location.width,0,255,rectangle_value);
+           gsap.to(rectangle,{
+            backgroundColor:`rgb(0,0,${bluecolor})`,
+            ease:Power4,
+           })
+          }
+        })
+    </script>
+</body>
+</html>
